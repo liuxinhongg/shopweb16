@@ -1,13 +1,14 @@
 <template>
     <div>
-        <el-select v-model="value" placeholder="请选择" @change="btn(value)">
-            <el-option
-            v-for="item in options"
-            :key="item.name"
-            :label="item.label"
-            :value="item.name">
-            </el-option>
-        </el-select>
+        <div class="page_top">
+           <div class="top_sousuo"> <el-input v-model="sousuoval" placeholder="请输入内容"></el-input> <el-button  type="danger" size="mini" @click="search"> 搜索</el-button> </div> 
+        </div>
+        <div class="subject_content">
+            <div class="item" v-for="(item,index) in subjectlist" :key="index">
+                <img :src="item." alt="">
+                <h3></h3>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -15,47 +16,51 @@
     export default {
         data(){
             return{
-                 options: [{
-                    name: '11',
-                    label: '角色一'
-                    }, {
-                    name: '22',
-                    label: '角色一'
-                    }, {
-                    name: '33',
-                    label: '角色三'
-                    }, {
-                    name: '44',
-                    label: '角色四'
-                    }, {
-                    name: '55',
-                    label: '角色五'
-                    }],
-                value: ''
+                sousuoval:'',
+                subjectlist:[]
             }
         },
         created(){
-            this.$axios.get("/api/home/newProduct/list",{
+            // 首页新品管理--查询
+            this.$axios.get("/api/home/recommendSubject/list",{
                 productName:'',
                 recommendStatus:'',
-                pageSize:5,
+                pageSize:3,
                 pageNum:1
             }).then(res=>{
                 console.log(res);
+                this.subjectlist=res.data.data.list;
             })
         },
         methods:{
-            btn(n){
-                // console.log(n);
-                // this.$axios.get("url",{params:{"参数"}}).then(res=>{
-                //     console.log(n)
-                // })
-            }
-
+            search(){}
         }
     }
 </script>
 
-<style scoped>
+<style>
+.page_top{
+    width: 50%;
+    height: 80px;
+    margin: 20px auto;
 
+}
+.top_sousuo{
+    width: 300px;
+    height: 40px;
+    display: flex;
+    justify-content: flex-start;
+}
+.subject_content{
+    width: 80%;
+    overflow: hidden;
+    margin: auto;
+}
+.item{
+    width: 300px;
+    height: 350px;
+    box-shadow: 0px 0px 5px #ccc;
+    margin: 10px;
+    float: left;
+}
 </style>
