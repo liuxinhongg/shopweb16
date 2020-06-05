@@ -50,6 +50,7 @@ export default {
       this.$axios.post("/api/admin/register",this.registerForm).then(res=>{
         console.log(res);
         if(res.data.code===200){
+          localStorage.setItem('email', this.registerForm.email);
           this.$router.push("/")
         }
       })
@@ -57,7 +58,6 @@ export default {
   }
 };
 </script>
-
 <style lang="">
 .registerruleForm{
   width: 30%;
