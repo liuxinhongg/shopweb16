@@ -9,9 +9,9 @@
         <el-button type="text">
           <router-link to="/login" v-show="!isLogin">登陆</router-link>
         </el-button>
-        <div class="userinfo">
+        <div class="userinfo"  v-show="isLogin">
           <img :src="usericon" alt srcset width="40" height="40" />
-          <router-link to="/page" v-show="isLogin">{{current}}</router-link>
+          <router-link to="/page">{{current}}</router-link>
         </div>
         <el-button type="text">
           <router-link to="/login" v-show="isLogin">[退出]</router-link>
@@ -39,7 +39,9 @@ export default {
     }
   },
   methods: {
-    search() {}
+    search() {
+      this.$emit('getvalue', this.sousuoval)
+    }
   }
 };
 </script>

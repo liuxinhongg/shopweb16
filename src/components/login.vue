@@ -39,14 +39,14 @@ export default {
         if(res.data.code===404){
           _this.$message.error("用户名或密码错误");
         }else if(res.data.code===200){
-          let useremail=localStorage.getItem("email");
-          console.log(useremail)
+          // let useremail=localStorage.getItem("email");
+          // console.log(useremail)
           _this.userToken = 'Bearer ' + res.data.data.token;
           // 将用户token保存到vuex中
           _this.changeLogin({ Authorization: _this.userToken });
           // 获取用户信息
           _this.$axios.get("/api/admin/info").then(res=>{
-            console.log(res);
+            // console.log(res);
             let users=[];
             users.push(res.data.data);
             // for (let key in res.data.data) {
@@ -54,9 +54,11 @@ export default {
             // }
             console.log(users)
             let isUser=users.filter(item=>{
-              return item.username==this.loginform.username&&item.email==useremail
+              // console.log(item)
+              // return item.username==this.loginform.username&&item.email==useremail
+              return item.username==this.loginform.username
             })
-            console.log(isUser);
+            // console.log(isUser);
             localStorage.setItem("userAvatar",isUser[0].icon);
             if(isUser!=null&&isUser.length>0){
               // _this.$store.dispatch("setUser",isUser[0].email);
