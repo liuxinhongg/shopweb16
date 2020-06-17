@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 // Vue.prototype.$http = Axios
@@ -19,6 +20,7 @@ axios.interceptors.request.use(
     config => {
         if (localStorage.getItem('Authorization')) {
             config.headers.Authorization = localStorage.getItem('Authorization');
+            // config.headers.Authorization = store.state.Authorization;
         }
         return config;
     },

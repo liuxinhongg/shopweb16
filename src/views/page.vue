@@ -3,6 +3,7 @@
         
         <tou @getvalue="change($event)"></tou>
         <div class="subject_content">
+            <el-button type="info" @click="newfrist">新增首页专题</el-button>
             <h1> <font color="red">———专题推荐———</font> </h1>
             <div class="item" v-for="(item,index) in subjectlist" :key="index">
                 <img :src="item.pic" alt="">
@@ -18,24 +19,51 @@
                 <h3>{{item.productName}}</h3>
             </div>
         </div>
+        <!-- 新增弹框 -->
+        <el-dialog title="收货地址" :visible.sync="newvisible">
+            <el-form :model="themeform">
+                <el-form-item label="主题名称" :label-width="formLabelWidth">
+                    <el-input v-model="themeform.subjectName" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="主题ID" :label-width="formLabelWidth">
+                    <el-input v-model.number="themeform.subjectId" autocomplete="off" placeholder="主题id是1-6" min="1" max="6"></el-input>
+                </el-form-item>
+                <el-form-item label="上传文件地址" :label-width="formLabelWidth">
+                    <el-input type="text" v-model="themeform.pic"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="newvisible = false">取 消</el-button>
+                <el-button type="primary" @click="newfrom">确 定</el-button>
+            </div>
+            </el-dialog>
     </div>
 </template>
 <script>
-// import { mapMutations } from 'vuex';
+import { mapMutations } from 'vuex';
 import tou from "@/components/top"
     export default {
         components:{
             tou
         },
-       
         data(){
             return{
+                formLabelWidth:'300',
+                themeform:{
+                    subjectName:'',
+                    subjectId:1,
+                    sort:0,
+                    recommendStatus:1,
+                    pic:'',
+                },
+                newvisible:false,
                 isdl:this.$store.state.isLogin,
                 sousuoval:'',
                 subjectlist:[],
                 newlist:[],
                 getTopVal:'',
-                defaultImg: 'this.src = "' + require('../assets/newlist.png') + '"'
+                defaultImg: 'this.src = "' + require('../assets/newlist.png') + '"',
+                
             }
         },
         mounted(){
@@ -50,6 +78,32 @@ import tou from "@/components/top"
             this.newProduct();
         },
         methods:{
+            newfrist(){
+                this.newvisible=true;
+            },
+            newfrom(){
+                this.$axios.post('/api/home/recommendSubject/create',JSON.stringify([this.themeform]),{
+                     headers: {
+                        'Content-Type': 'application/json;charset=UTF-8'
+                    }
+                }).then(res=>{
+                    console.log(res);
+                    if(res.data.code==200){
+                        this.$message.success("数据新增成功")
+                        this.$axios.get('/api/home/recommendSubject/list',{
+                            params:{
+                                subjectName:'',
+                                recommendStatus:'',
+                                pageSize:6,
+                                pageNum:3
+                            }
+                        }).then(res=>{
+                            console.log(res);
+                        })
+                        this.newvisible=false;
+                    }
+                })
+            },
             defaultBackImg() {
                 if(event.type == "error") {
                 event.target.src= require("../assets/newlist.png")

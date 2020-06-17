@@ -9,12 +9,13 @@
     <el-form-item label="邮箱" prop="email">
         <el-input type="text" v-model="registerForm.email" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="验证码" prop="icon">
+      <el-form-item label="头像" prop="icon">
         <el-input type="text" v-model="registerForm.icon" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="昵称" prop="nickName">
         <el-input type="text" v-model="registerForm.nickName" autocomplete="off"></el-input>
       </el-form-item>
+      
       <el-form-item label="用户名" prop="username">
         <el-input type="text" v-model="registerForm.username" autocomplete="off"></el-input>
       </el-form-item>
@@ -50,8 +51,8 @@ export default {
       this.$axios.post("/api/admin/register",this.registerForm).then(res=>{
         console.log(res);
         if(res.data.code===200){
-          localStorage.setItem('email', this.registerForm.email);
-          this.$router.push("/")
+          // localStorage.setItem('email', this.registerForm.email);
+          this.$router.push("/");
         }
       })
     }

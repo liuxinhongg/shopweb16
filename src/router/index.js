@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store'
 import login from '@/components/login'
 import register from '@/components/register'
+import aa from '@/components/aa'
 import page from '@/views/page'
 
 Vue.use(Router)
@@ -26,6 +28,11 @@ const router = new Router({
                 path: '/page',
                 name: 'page',
                 component: page
+            },
+            {
+                path: '/aa',
+                name: 'aa',
+                component: aa
             }
         ]
     })
@@ -36,7 +43,7 @@ router.beforeEach((to, from, next) => {
         next();
     } else {
         let token = localStorage.getItem('Authorization');
-
+        // let token = store.state.Authorization;
         if (token === 'null' || token === '') {
             next('/login');
         } else {

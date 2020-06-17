@@ -3,10 +3,9 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-
     state: {
         isLogin: false, //用来显示是否登陆
-        currentuser: null, //用来显示用户信息是否显示
+        currentuser: {}, //用来显示用户信息是否显示
         // 存储token
         Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : ''
     },

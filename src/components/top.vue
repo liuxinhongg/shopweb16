@@ -10,8 +10,8 @@
           <router-link to="/login" v-show="!isLogin">登陆</router-link>
         </el-button>
         <div class="userinfo"  v-show="isLogin">
-          <img :src="usericon" alt srcset width="40" height="40" />
-          <router-link to="/page">{{current}}</router-link>
+          <img :src="current.icon" alt srcset width="40" height="40" />
+          <router-link to="/page">{{current.username}}</router-link>
         </div>
         <el-button type="text">
           <router-link to="/login" v-show="isLogin">[退出]</router-link>
