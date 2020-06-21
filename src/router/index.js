@@ -5,7 +5,7 @@ import login from '@/components/login'
 import register from '@/components/register'
 import aa from '@/components/aa'
 import page from '@/views/page'
-
+import home from '@/views/home'
 Vue.use(Router)
 
 const router = new Router({
@@ -13,6 +13,11 @@ const router = new Router({
         routes: [{
                 path: '/',
                 redirect: "/login"
+            },
+            {
+                path: '/home',
+                name: 'home',
+                component: home
             },
             {
                 path: '/login',
